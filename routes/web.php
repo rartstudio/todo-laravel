@@ -16,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::apiResource('todos', TodoController::class)->except(['index', 'show']);
+Route::apiResource('todos', TodoController::class)->except(['index', 'show', 'create', 'edit', 'update']);
 Route::put('/todos/{todo}/priority', [TodoController::class, 'updatePriority'])->name('todos.update-priority');
+Route::put('/todos/{todo}/task', [TodoController::class, 'updateTask'])->name('todos.update-task');
+Route::put('/todos/{todo}/status', [TodoController::class, 'updateStatus'])->name('todos.update-status');

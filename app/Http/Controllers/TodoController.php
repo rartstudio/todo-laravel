@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TodoPriority;
 use App\Http\Requests\TodoStoreRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
@@ -9,54 +10,24 @@ use Illuminate\Http\Request;
 class TodoController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(TodoStoreRequest $request)
     {
+        $priority = $request->input('priority');
+
         Todo::create([
             'task' => $request->input('task'),
-            'priority' => $request->input('priority')
+            'priority' => $priority != null ? $priority : TodoPriority::Low
         ]);
 
         return redirect()->to('/');
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Todo $todo)
+    public function updateStatus(Request $request, Todo $todo)
     {
         $todo->update([
             'is_done' => $request->boolean('is_done'),
@@ -69,6 +40,15 @@ class TodoController extends Controller
     {
         $todo->update([
             'priority' => $request->input('priority'),
+        ]);
+
+        return redirect()->to('/');
+    }
+
+    public function updateTask(TodoStoreRequest $request, Todo $todo)
+    {
+        $todo->update([
+            'task' => $request->input('task')
         ]);
 
         return redirect()->to('/');
