@@ -1,12 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-      "./resources/**/*.blade.php",
-      "./resources/**/*.js",
-      "./resources/**/*.vue",
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        "./resources/**/*.vue",
     ],
     theme: {
-      extend: {},
+        extend: {
+            fontFamily: {
+                nunito: ["Nunito", "sans-serif"],
+                // Add more custom fonts as needed
+            },
+        },
     },
     plugins: [],
-  }
+};

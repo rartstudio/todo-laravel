@@ -4,6 +4,7 @@
     >
         <div class="flex flex-row">
             <input
+                class="font-nunito"
                 type="checkbox"
                 :true-value="1"
                 v-model="todoForm.is_done"
@@ -11,11 +12,14 @@
             />
             <p class="ml-2">{{ todoForm.task }}</p>
         </div>
-        <button type="button" @click="deleteTodo">X</button>
+        <button type="button" @click="deleteTodo">
+            <XMarkIcon class="h-6 w-6 text-blue-500" />
+        </button>
     </div>
 </template>
 
 <script setup>
+import { XMarkIcon } from "@heroicons/vue/24/solid";
 import { useForm } from "@inertiajs/vue3";
 
 // This time store a reference to props so we can pull in the defaults in the form

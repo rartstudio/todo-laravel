@@ -1,6 +1,6 @@
 <template>
     <div class="mx-auto max-w-3xl mt-10 px-4">
-        <h1 class="font-light text-3xl">My Todo List</h1>
+        <h1 class="font-nunito font-light text-3xl">My Todo List</h1>
 
         <div class="flex flex-col space-y-4 mt-5">
             <AddTodoForm />
