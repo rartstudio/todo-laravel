@@ -31,6 +31,7 @@ class TodoController extends Controller
     {
         Todo::create([
             'task' => $request->input('task'),
+            'priority' => $request->input('priority')
         ]);
     
         return redirect()->to('/');
@@ -59,6 +60,15 @@ class TodoController extends Controller
     {
         $todo->update([
             'is_done' => $request->boolean('is_done'),
+        ]);
+
+        return redirect()->to('/');
+    }
+
+    public function updatePriority(Request $request, Todo $todo) 
+    {
+        $todo->update([
+            'priority' => $request->boolean('priority'),
         ]);
 
         return redirect()->to('/');

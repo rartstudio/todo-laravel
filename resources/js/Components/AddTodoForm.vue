@@ -18,6 +18,20 @@
             </small>
         </div>
         <div>
+            <select
+                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded"
+                v-model="todoForm.priority"
+            >
+                <option
+                    v-for="priority in props.todoPriorities"
+                    :key="priority.key"
+                    :value="priority.key"
+                >
+                    {{ priority.value }}
+                </option>
+            </select>
+        </div>
+        <div>
             <button
                 class="font-nunito px-6 py-1.5 bg-indigo-600 rounded text-white disabled:opacity-50"
                 :disabled="todoForm.processing"
@@ -32,10 +46,14 @@
 // Import the useForm helper
 import { useForm } from "@inertiajs/vue3";
 
+// This time store a reference to props so we can pull in the defaults in the form
+const props = defineProps(["todoPriorities"]);
+
 // Initialise the form with the properties we want to update client-side send to the server-side
 const todoForm = useForm({
     processing: false,
     task: "",
+    priority: 0,
 });
 
 // Create a method that tells the form to submit to TodoController@store

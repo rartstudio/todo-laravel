@@ -19,6 +19,7 @@ class TodoFactory extends Factory
         return [
             'task' => $this->faker->words(random_int(5, 10), true),
             'is_done' => $this->faker->boolean(25),
+            'priority' => 0,
         ];
     }
 }
