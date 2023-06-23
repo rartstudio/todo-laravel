@@ -19,15 +19,17 @@
         </div>
         <div>
             <select
-                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded"
+                @change="updatePriority"
+                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded mr-4"
                 v-model="todoForm.priority"
             >
+                <option disabled value="">Select priority</option>
                 <option
-                    v-for="priority in props.todoPriorities"
-                    :key="priority.key"
-                    :value="priority.key"
+                    v-for="(priority, index) in todoPriorities"
+                    :key="index"
+                    :value="index"
                 >
-                    {{ priority.value }}
+                    {{ priority }}
                 </option>
             </select>
         </div>

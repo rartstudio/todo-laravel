@@ -17,7 +17,7 @@ class TodoFactory extends Factory
     public function definition(): array
     {
         return [
-            'task' => $this->faker->words(random_int(5, 10), true),
+            'task' => $this->faker->words(random_int(2, 6), true),
             'is_done' => $this->faker->boolean(25),
             'priority' => 0,
         ];

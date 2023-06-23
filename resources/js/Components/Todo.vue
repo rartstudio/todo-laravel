@@ -5,13 +5,14 @@
         <div class="flex flex-row">
             <select
                 @change="updatePriority"
-                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded"
+                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded mr-4"
                 v-model="todoForm.priority"
             >
+                <option disabled value="">Select priority</option>
                 <option
                     v-for="(priority, index) in todoPriorities"
                     :key="index"
-                    :value="priority"
+                    :value="index"
                     :selected="index === todoForm.priority"
                 >
                     {{ priority }}
@@ -24,7 +25,7 @@
                 v-model="todoForm.is_done"
                 @change="updateTaskDone"
             />
-            <p class="ml-2">{{ todoForm.task }}</p>
+            <p class="ml-2 leading-8">{{ todoForm.task }}</p>
         </div>
         <button type="button" @click="deleteTodo">
             <XMarkIcon class="h-6 w-6 text-blue-500" />
@@ -52,7 +53,7 @@ const updateTaskDone = () => {
 };
 
 const updatePriority = () => {
-    todoForm.put(`/todos/${props.todo.id}`);
+    todoForm.put(`/todos/${props.todo.id}/priority`);
 };
 
 const deleteTodo = () => {

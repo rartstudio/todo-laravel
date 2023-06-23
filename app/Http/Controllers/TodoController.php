@@ -33,7 +33,7 @@ class TodoController extends Controller
             'task' => $request->input('task'),
             'priority' => $request->input('priority')
         ]);
-    
+
         return redirect()->to('/');
     }
 
@@ -65,10 +65,10 @@ class TodoController extends Controller
         return redirect()->to('/');
     }
 
-    public function updatePriority(Request $request, Todo $todo) 
+    public function updatePriority(Request $request, Todo $todo)
     {
         $todo->update([
-            'priority' => $request->boolean('priority'),
+            'priority' => $request->input('priority'),
         ]);
 
         return redirect()->to('/');
@@ -78,9 +78,9 @@ class TodoController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Todo $todo)
-{
-    $todo->delete();
+    {
+        $todo->delete();
 
-    return redirect()->to('/');
-}
+        return redirect()->to('/');
+    }
 }
