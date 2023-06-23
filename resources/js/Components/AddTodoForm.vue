@@ -62,5 +62,11 @@ const todoForm = useForm({
 const createTodo = () => {
     todoForm.processing = true;
     todoForm.post("/todos");
+    reset();
+};
+
+const reset = () => {
+    todoForm.task = "";
+    todoForm.priority = 0;
 };
 </script>

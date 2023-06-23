@@ -37,17 +37,22 @@
             </template>
         </div>
         <template v-if="isEdit">
-            <button type="button" @click="updateTaskTitle">
-                <CheckIcon class="h-6 w-6 text-green-500" />
-            </button>
+            <div class="flex flex-row justify-center items-center">
+                <button type="button" @click="updateTaskTitle" class="mr-2">
+                    <CheckIcon class="h-6 w-6 text-green-500" />
+                </button>
+                <button type="button" @click="editTodo" class="ml-2">
+                    <XMarkIcon class="h-6 w-6 text-blue-500" />
+                </button>
+            </div>
         </template>
         <template v-else>
             <div class="flex flex-row justify-center items-center">
                 <button type="button" @click="editTodo" class="mr-2">
                     <PencilIcon class="h-4 w-4 text-blue-500" />
                 </button>
-                <button type="button" @click="deleteTodo">
-                    <XMarkIcon class="h-6 w-6 text-red-500" />
+                <button type="button" @click="deleteTodo" class="ml-4">
+                    <TrashIcon class="h-5 w-5 text-red-500" />
                 </button>
             </div>
         </template>
@@ -55,7 +60,12 @@
 </template>
 
 <script setup>
-import { XMarkIcon, PencilIcon, CheckIcon } from "@heroicons/vue/24/solid";
+import {
+    XMarkIcon,
+    PencilIcon,
+    CheckIcon,
+    TrashIcon,
+} from "@heroicons/vue/24/solid";
 
 import { useForm } from "@inertiajs/vue3";
 import { ref, defineProps } from "vue";
