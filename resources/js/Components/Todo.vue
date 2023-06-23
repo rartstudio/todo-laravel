@@ -27,14 +27,25 @@
             />
             <p class="ml-2 leading-8">{{ todoForm.task }}</p>
         </div>
+        <button type="button" @click="updateTaskDone">
+            <CheckIcon class="h-6 w-6 text-green-500" />
+        </button>
+        <button type="button" @click="editTodo">
+            <PencilSquareIcon class="h-6 w-6 text-blue-500" />
+        </button>
         <button type="button" @click="deleteTodo">
-            <XMarkIcon class="h-6 w-6 text-blue-500" />
+            <XMarkIcon class="h-6 w-6 text-red-500" />
         </button>
     </div>
 </template>
 
 <script setup>
-import { XMarkIcon } from "@heroicons/vue/24/solid";
+import {
+    XMarkIcon,
+    PencilSquareIcon,
+    CheckIcon,
+} from "@heroicons/vue/24/solid";
+
 import { useForm } from "@inertiajs/vue3";
 
 // This time store a reference to props so we can pull in the defaults in the form
@@ -51,6 +62,12 @@ const todoForm = useForm({
 const updateTaskDone = () => {
     todoForm.put(`/todos/${props.todo.id}`);
 };
+
+const updateTasKTitle = () => {
+    todoForm.put(``);
+};
+
+const editTodo = () => {};
 
 const updatePriority = () => {
     todoForm.put(`/todos/${props.todo.id}/priority`);
