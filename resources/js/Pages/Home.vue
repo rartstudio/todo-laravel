@@ -12,13 +12,18 @@
             />
         </div>
         <div class="flex justify-center mt-4">
-            <ul class="flex flex-row space-x-2">
+            <ul class="flex flex-row space-x-2" id="pagination">
                 <li
                     v-for="(pagination, index) in separatedPaginationRef"
                     :key="index"
                 >
                     <Link
-                        class="px-4 py-2 bg-green-500 rounded-md"
+                        :class="[
+                            isActivePage(Object.keys(pagination)[0])
+                                ? 'bg-green-500'
+                                : 'bg-gray-500',
+                            'px-4 py-2 rounded-md',
+                        ]"
                         :href="pagination[Object.keys(pagination)[0]]"
                         >{{ Object.keys(pagination)[0] }}</Link
                     >
@@ -29,7 +34,7 @@
 </template>
 
 <script setup>
-import { Link, router } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import Todo from "../Components/Todo.vue";
 import { ref } from "vue";
 import AddTodoForm from "../Components/AddTodoForm.vue";
@@ -48,4 +53,14 @@ const separatedPagination = Object.entries(todoPagination[0]).map(
 );
 
 const separatedPaginationRef = ref(separatedPagination);
+
+// Check if the current page matches the pagination link
+const isActivePage = (page) => {
+    const url = new URL(window.location.href);
+    const currentPage = new URLSearchParams(url.search).get("page");
+    if (currentPage == null && page == 1) {
+        return true;
+    }
+    return page == currentPage;
+};
 </script>
