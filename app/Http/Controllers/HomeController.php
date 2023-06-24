@@ -10,8 +10,11 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $todos = Todo::paginate(4);
+
         return Inertia::render('Home', [
-            'todos' => Todo::latest()->get(),
+            'todos' => $todos->items(),
+            'todoPagination' => $todos->links()->elements,
             'todoPriorities' => TodoPriority::asSelectArray(),
         ]);
     }
