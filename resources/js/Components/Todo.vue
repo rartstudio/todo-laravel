@@ -2,7 +2,7 @@
     <div
         class="bg-gray-100 py-2 px-4 rounded flex flex-row justify-between items-center space-x-4"
     >
-        <div class="flex-grow flex flex-row">
+        <div class="flex-grow flex flex-row items-center">
             <select
                 @change="updatePriority"
                 class="font-nunito block px-2 py-1.5 bg-gray-100 rounded mr-4"
@@ -26,11 +26,24 @@
                 @change="updateTaskDone"
             />
             <template v-if="isEdit">
-                <input
-                    type="text"
-                    class="font-nunito ml-3 px-4 rounded-md w-full focus:outline-none focus:border focus:border-blue-500"
-                    v-model="todoForm.task"
-                />
+                <div
+                    class="ml-3 flex flex-col items-start justify-start w-full"
+                >
+                    <input
+                        type="text"
+                        :class="[
+                            todoForm.errors['task'] ? 'mt-[22px]' : '',
+                            'font-nunito px-4 py-2 rounded-md w-full focus:outline-none focus:border focus:border-blue-500',
+                        ]"
+                        v-model="todoForm.task"
+                    />
+                    <small
+                        v-if="todoForm.errors['task']"
+                        class="text-red-500 mt-2 block font-nunito"
+                    >
+                        {{ todoForm.errors["task"] }}
+                    </small>
+                </div>
             </template>
             <template v-else>
                 <p class="ml-3 leading-8">{{ todoForm.task }}</p>
@@ -87,12 +100,17 @@ const updateTaskDone = () => {
 };
 
 const updateTaskTitle = () => {
-    todoForm.put(`/todos/${props.todo.id}/task`);
-    isEdit.value = !isEdit.value;
+    todoForm.put(`/todos/${props.todo.id}/task`, {
+        onSuccess: () => (isEdit.value = !isEdit.value),
+    });
 };
 
 const editTodo = () => {
-    isEdit.value = !isEdit.value;
+    if (todoForm.errors["task"]) {
+        isEdit.value = true;
+    } else {
+        isEdit.value = !isEdit.value;
+    }
 };
 
 const updatePriority = () => {

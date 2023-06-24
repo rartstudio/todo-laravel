@@ -5,7 +5,7 @@
     >
         <div class="flex-1">
             <input
-                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded w-full"
+                class="font-nunito block px-2 py-1.5 bg-gray-100 rounded w-full focus:outline-none focus:border focus:border-blue-500"
                 placeholder="Enter your task..."
                 type="text"
                 v-model="todoForm.task"
@@ -62,11 +62,6 @@ const todoForm = useForm({
 const createTodo = () => {
     todoForm.processing = true;
     todoForm.post("/todos");
-    reset();
-};
-
-const reset = () => {
-    todoForm.task = "";
-    todoForm.priority = 0;
+    todoForm.reset();
 };
 </script>
