@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Enums\TodoPriority;
 use App\Models\Todo;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $todos = Todo::paginate(6);
+        $search = $request->query('task');
+        $query = Todo::query();
+
+        if ($search) {
+            $query->where('task', 'like', "%{$search}%");
+        }
+
+        $todos = $query->paginate(6);
 
         return Inertia::render('Home', [
             'todos' => $todos->items(),
