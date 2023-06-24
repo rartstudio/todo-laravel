@@ -18,6 +18,8 @@ class HomeController extends Controller
             $query->where('task', 'like', "%{$search}%");
         }
 
+        $query->orderBy('created_at', 'desc');
+
         $todos = $query->paginate(6);
 
         return Inertia::render('Home', [
