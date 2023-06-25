@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TodoPriority;
 use App\Models\Todo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,9 +17,6 @@ class TodoControllerTest extends TestCase
      */
     public function test_can_view_todo()
     {
-        // Call the Todo factory to create 10 todos
-        Todo::factory(10)->create();
-
         // Hit the HomeController@index and capture the response
         $response = $this->get('/');
 
@@ -38,9 +36,11 @@ class TodoControllerTest extends TestCase
     {
         $todo = Todo::factory()->create([
             'is_done' => false,
+            'task' => 'before edit',
+            'priority' => TodoPriority::Low
         ]);
 
-        $response = $this->put(route('todos.update', $todo), [
+        $response = $this->put(route('todos.update-status', $todo), [
             'is_done' => true,
         ]);
 
@@ -48,6 +48,45 @@ class TodoControllerTest extends TestCase
         $this->assertDatabaseHas('todos', [
             'id' => $todo->id,
             'is_done' => true,
+        ]);
+    }
+
+    public function test_can_update_task_todo()
+    {
+        $todo = Todo::factory()->create([
+            'is_done' => false,
+            'task' => 'before edit',
+            'priority' => TodoPriority::Low
+        ]);
+
+        $response = $this->put(route('todos.update-task', $todo), [
+            'task' => 'from unit test',
+        ]);
+
+        $response->assertRedirect('/');
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'task' => 'from unit test',
+        ]);
+    }
+
+    public function test_can_update_status_todo()
+    {
+        $todo = Todo::factory()->create([
+            'is_done' => false,
+            'task' => 'before edit',
+            'priority' => TodoPriority::Low,
+        ]);
+
+        $response = $this->put(route('todos.update-priority', $todo), [
+            'task' => 'from unit test',
+            'priority' => TodoPriority::High
+        ]);
+
+        $response->assertRedirect('/');
+        $this->assertDatabaseHas('todos', [
+            'id' => $todo->id,
+            'priority' => TodoPriority::High
         ]);
     }
 

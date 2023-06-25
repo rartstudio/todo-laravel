@@ -1,6 +1,6 @@
 # Todo Laravel
 
-A todo app using tech stack laravel inertia vue3. minimum php v8.1 and node v20.3.0 how to running this app please follow the instructions below:
+A todo app using tech stack laravel inertia vue3. minimum php v8.1, mysql v8 and node v20.3.0 how to running this app please follow the instructions below:
 
 ## Run Locally
 
@@ -46,11 +46,11 @@ Generate the key
   php artisan key:generate
 ```
 
-Change this line based on prepared database for this app
+Change this line based on prepared database for this app for credential will be following your local mysql
 
 ```bash
 DB_CONNECTION=mysql
-DB_HOST=mysql
+DB_HOST==localhost
 DB_PORT=3306
 DB_DATABASE=todolaravel
 DB_USERNAME=root
