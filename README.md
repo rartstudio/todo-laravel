@@ -63,4 +63,10 @@ Running migration
   php artisan migrate
 ```
 
+Running seeder
+
+```bash
+  php artisan db:seed
+```
+
 then running your app. please choose your convenient way

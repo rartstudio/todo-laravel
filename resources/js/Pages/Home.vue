@@ -4,21 +4,39 @@
             <Link href="/" class="font-nunito font-light text-3xl"
                 >My Todo List</Link
             >
-            <div class="flex flex-row">
-                <input
-                    type="text"
-                    placeholder="Search task here"
-                    v-model="todoSearch.task"
-                    :class="[
-                        'border font-nunito px-4 py-2 rounded-md w-full focus:outline-none focus:border focus:border-blue-500',
-                    ]"
-                />
-                <button
-                    class="font-nunito px-6 py-1.5 bg-indigo-600 rounded-md text-white disabled:opacity-50 ml-2"
-                    @click="searchTask"
-                >
-                    <MagnifyingGlassIcon class="h-5 w-5 text-white" />
-                </button>
+            <div class="flex flex-row items-center">
+                <div>
+                    <select
+                        @change="searchPriority"
+                        class="font-nunito block px-2 py-[.7rem] bg-gray-100 rounded mr-4"
+                        v-model="todoSearchPriority.priority"
+                    >
+                        <option disabled value="">Select priority</option>
+                        <option
+                            v-for="(priority, index) in todoPriorities"
+                            :key="index"
+                            :value="index"
+                        >
+                            {{ priority }}
+                        </option>
+                    </select>
+                </div>
+                <div class="flex flex-row">
+                    <input
+                        type="text"
+                        placeholder="Search task here"
+                        v-model="todoSearchTask.task"
+                        :class="[
+                            'border font-nunito px-4 py-2 rounded-md w-full focus:outline-none focus:border focus:border-blue-500',
+                        ]"
+                    />
+                    <button
+                        class="font-nunito px-6 py-1.5 bg-indigo-600 rounded-md text-white disabled:opacity-50 ml-2"
+                        @click="searchTask"
+                    >
+                        <MagnifyingGlassIcon class="h-5 w-5 text-white" />
+                    </button>
+                </div>
             </div>
         </div>
         <div class="flex flex-col space-y-4 mt-5">
@@ -86,15 +104,31 @@ const isActivePage = (page) => {
     return page == currentPage;
 };
 
-const todoSearch = useForm({
+const todoSearchTask = useForm({
     task: new URLSearchParams(new URL(window.location.href).search).get("task")
         ? new URLSearchParams(new URL(window.location.href).search).get("task")
         : "",
 });
 
 const searchTask = () => {
-    const encoded = encodeURIComponent(todoSearch.task).replace(/%20/g, "+");
-    console.log(encoded);
-    todoSearch.get(`/?task=${encoded}`);
+    const encoded = encodeURIComponent(todoSearchTask.task).replace(
+        /%20/g,
+        "+"
+    );
+    todoSearchTask.get(`/?task=${encoded}`);
+};
+
+const todoSearchPriority = useForm({
+    priority: new URLSearchParams(new URL(window.location.href).search).get(
+        "priority"
+    )
+        ? new URLSearchParams(new URL(window.location.href).search).get(
+              "priority"
+          )
+        : "",
+});
+
+const searchPriority = () => {
+    todoSearchPriority.get(`/?priority=${todoSearchPriority.priority}`);
 };
 </script>

@@ -11,16 +11,21 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->query('task');
+        $task = $request->query('task');
+        $priority = $request->query('priority');
         $query = Todo::query();
 
-        if ($search) {
-            $query->where('task', 'like', "%{$search}%");
+        if ($task) {
+            $query->where('task', 'like', "%{$task}%");
+        }
+
+        if ($priority != null) {
+            $query->where('priority','=',$priority);
         }
 
         $query->orderBy('created_at', 'desc');
 
-        $todos = $query->paginate(6);
+        $todos = $query->paginate(10);
 
         return Inertia::render('Home', [
             'todos' => $todos->items(),
