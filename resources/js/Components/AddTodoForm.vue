@@ -38,17 +38,20 @@
                 class="font-nunito px-6 py-1.5 bg-indigo-600 rounded text-white disabled:opacity-50"
                 :disabled="todoForm.processing"
             >
-                Add
+                <PlusIcon class="h-6 w-6 text-white" />
             </button>
         </div>
     </form>
 </template>
 
 <script setup>
+// Import hero icon
+import { PlusIcon } from "@heroicons/vue/24/solid";
+
 // Import the useForm helper
 import { useForm } from "@inertiajs/vue3";
 
-// This time store a reference to props so we can pull in the defaults in the form
+// store props
 const props = defineProps(["todoPriorities"]);
 
 // Initialise the form with the properties we want to update client-side send to the server-side
