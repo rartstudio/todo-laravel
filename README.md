@@ -69,4 +69,10 @@ Running seeder
   php artisan db:seed
 ```
 
+Running test
+
+```bash
+  php artisan test
+```
+
 then running your app. please choose your convenient way
